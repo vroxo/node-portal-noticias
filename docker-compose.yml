@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mysql:
+    hostname: mysql
+    container_name: mysql-node
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+        - node_network
+  
+  web:
+    build: .
+    command: nodemon app.js
+    volumes:
+      - .:/usr/app
+    ports:
+      - "3000:3000"
+    networks:
+        - node_network
+
+networks: 
+  node_network:
